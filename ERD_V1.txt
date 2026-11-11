@@ -1,0 +1,78 @@
+[IAM / Users & Auth]
+  └── iam_users (
+        id, 
+        role_id,                 --> FK ke iam_roles
+        name, 
+        phone, 
+        email, 
+        password_hash, 
+        nik_ktp, 
+        is_verified, 
+        is_active, 
+        created_at, 
+        updated_at
+      )
+  └── iam_user_auth_providers (
+        id, 
+        user_id, 
+        provider, 
+        provider_user_id, 
+        created_at
+      )
+  └── iam_user_sessions (
+        id, 
+        user_id, 
+        refresh_token_hash, 
+        user_agent, 
+        ip_address, 
+        expires_at, 
+        revoked_at
+      )
+  └── iam_roles (id, name: admin, juri, peserta, penjoki, operator)
+
+[Member / Subscription Peserta]
+  └── member_plans (id, name, quota_birds, max_events, price)
+  └── member_user_subscriptions (id, user_id, plan_id, start_date, end_date, status)
+
+[Assets / Lapangan & Hardware]
+  └── asset_birds (id, ring_number, bird_type, name)
+  └── asset_bird_owners (id, bird_id, user_id, is_primary_contact)
+  └── asset_lapaks (id, number, description)
+  └── asset_devices (id, type: camera/mic, ip_address, rtsp_url, lapak_id)
+
+[Competition Core]
+  └── competition_events (id, title, date, location, status)
+  └── competition_rounds (id, event_id, round_number, bird_type, start_time, end_time, status)
+  └── competition_round_participants (
+        id, 
+        round_id, 
+        lapak_id, 
+        bird_id, 
+        registered_by_user_id, 
+        registered_as_role, 
+        declared_owner_user_id, 
+        declared_owner_phone, 
+        owner_consent_status, 
+        legal_declaration_agreed, 
+        target_recipient_phone, 
+        status: confirmed/disqualified/withdrawn
+      )
+
+[Judging / Penilaian Baku]
+  └── judging_score_criteria (id, criteria_name)
+  └── judging_round_scores (id, round_participant_id, judge_user_id, criteria_id, score_value)
+
+[Media & Audio Summary]
+  └── media_round_recordings (
+        id, 
+        round_participant_id, 
+        video_url, 
+        audio_url, 
+        max_peak_dbfs, 
+        avg_rms_dbfs, 
+        clip_incident_count, 
+        singing_duration_seconds, 
+        is_sent, 
+        sent_at, 
+        sent_to_phone
+      )
